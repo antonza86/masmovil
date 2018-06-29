@@ -2,30 +2,39 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Jumbotron, Grid, Row, Col, Image, Button, Table} from 'react-bootstrap';
 
+import LoadingSpinner from './LoadingSpinner';
+
 import axios from 'axios';
 
 import './PhoneDetailComponent.css';
 
 class PhoneDetailComponent extends Component {
   state = {
-    phone: {}
+    phone: {},
+    loading: true
   }
 
   componentDidMount() {
     axios.get('http://localhost:3001/phones/' + this.props.match.params.model)
       .then(res => {
-        const phone = res.data;
-        this.setState({ phone });
+        this.setState(
+          {
+            phone: res.data,
+            loading: false
+          }
+        );
       })
   }
   
   render(){
+    const { phones, loading } = this.state;
     return (
       <Grid>
+        {loading ? <LoadingSpinner /> : ''}
         <Link to="/">
           <Button bsStyle="primary" className="back_button" >Back</Button>
         </Link>
-        <Jumbotron>
+        <Jumbotron className={(loading ? 'hidden' : 'show')}>
           <h2>{ this.state.phone.title }</h2>
           <p>{ this.state.phone.description }</p>
           <Row className="show-grid text-center">

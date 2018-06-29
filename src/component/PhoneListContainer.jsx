@@ -3,23 +3,32 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Jumbotron, Grid, Row, Col, Image, Button} from 'react-bootstrap';
 
+import LoadingSpinner from './LoadingSpinner';
+
 import './PhoneListContainer.css';
 
 
 class PhoneListContainer extends Component {
   state = {
-    phones: []
+    phones: [],
+    loading: true
   }
 
   componentDidMount() {
     axios.get('http://localhost:3001/phones')
       .then(res => {
-        const phones = res.data;
-        this.setState({ phones });
+        // const phones = res.data;
+        this.setState(
+          { 
+            phones: res.data,
+            loading: false
+          }
+        );
       })
   }
 
   render() {
+    const { phones, loading } = this.state;
     return (
       <Grid>
         <Row className="show-grid text-center">
@@ -36,6 +45,7 @@ class PhoneListContainer extends Component {
             ))
           }
         </Row>
+        {loading ? <LoadingSpinner /> : ''}
       </Grid>
     )
   }
