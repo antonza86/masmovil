@@ -12,7 +12,7 @@ class PhoneListContainer extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:3000/phones')
+    axios.get('http://localhost:3001/phones')
       .then(res => {
         const phones = res.data;
         this.setState({ phones });
