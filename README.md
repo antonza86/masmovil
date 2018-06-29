@@ -1,1 +1,1 @@
-React proba para MasMovil
+React proba para MasMovil. Front-end part.
